@@ -19,6 +19,7 @@ const StartupScreen = () => {
             transformedData.name,
             transformedData.email,
             transformedData.dob,
+            transformedData.image,
           ),
         );
       }
@@ -26,7 +27,7 @@ const StartupScreen = () => {
     };
 
     tryLogin();
-  }, [dispatch]);
+  }, []);
 
   return (
     <View style={styles.screen}>

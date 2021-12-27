@@ -86,7 +86,7 @@ const HomeScreen = ({navigation, route}) => {
               latitude: currentPosition.coords.latitude,
               longitude: currentPosition.coords.longitude,
             }}>
-            <MarkerView name={user.name} />
+            <MarkerView name={user.name} image={user.image} />
           </Marker>
         </MapView>
       </View>

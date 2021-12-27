@@ -4,6 +4,7 @@ const initialState = {
   name: null,
   email: null,
   dob: null,
+  image: null,
   didTryAutoLogin: false,
 };
 
@@ -14,6 +15,7 @@ const authReducer = (state = initialState, action) => {
         name: action.payload.name,
         email: action.payload.email,
         dob: action.payload.dob,
+        image: action.payload.image,
         didTryAutoLogin: state.didTryAutoLogin,
       };
     case LOGOUT:
@@ -23,6 +25,7 @@ const authReducer = (state = initialState, action) => {
         name: state.name,
         email: state.email,
         dob: state.dob,
+        image: state.image,
         didTryAutoLogin: true,
       };
     default:

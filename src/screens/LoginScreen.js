@@ -5,7 +5,10 @@ import {
   TextInput,
   Button,
   KeyboardAvoidingView,
+  Image,
 } from 'react-native';
+
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import {useDispatch} from 'react-redux';
 import {login} from '../store/actions/auth';
@@ -16,11 +19,22 @@ const LoginScreen = ({navigation, route}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [dob, setDob] = useState(new Date());
+  const [image, setImage] = useState(null);
 
   const dispatch = useDispatch();
 
   const loginHandler = () => {
-    dispatch(login(name, email, dob));
+    dispatch(login(name, email, dob, image));
+  };
+
+  const pickImage = async () => {
+    let result = await launchImageLibrary({
+      mediaTypes: 'photo',
+      quality: 1,
+    });
+    if (!result.didCancel) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   return (
@@ -28,6 +42,14 @@ const LoginScreen = ({navigation, route}) => {
       behavior="padding"
       keyboardVerticalOffset={50}
       style={styles.screen}>
+      {image && (
+        <View style={styles.imageContainer}>
+          <Image source={{uri: image}} style={styles.image} />
+        </View>
+      )}
+      <View style={styles.button}>
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
+      </View>
       <TextInput
         style={styles.input}
         value={name}
