@@ -59,7 +59,7 @@ const HomeScreen = ({navigation, route}) => {
             },
             {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
           );
-        }, 1000);
+        }, 100);
       } else {
         console.log('Permission not granted');
       }

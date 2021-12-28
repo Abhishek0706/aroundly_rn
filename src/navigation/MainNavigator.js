@@ -1,5 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
 import StartupScreen from '../screens/StartupScreen';
@@ -7,63 +7,73 @@ import NewEventScreen from '../screens/NewEventScreen';
 import AuthNavigator from './AuthNavigator';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text, Linking} from 'react-native';
+
+import ShareMenu from 'react-native-share-menu';
+import {View} from 'react-native';
 
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
-  // Deep Linking
-  const [data, setData] = useState(null);
-  const handelDeepLink = event => {
-    const data = event.url;
-    setData(data);
-  };
+  //share with
+  const [sharedData, setSharedData] = useState(null);
+  const [sharedMimeType, setSharedMimeType] = useState(null);
+  const [sharedExtraData, setSharedExtraData] = useState(null);
+
+  const handleShare = useCallback(item => {
+    if (!item) {
+      return;
+    }
+    const {mimeType, data, extraData} = item;
+
+    setSharedData(data);
+    setSharedExtraData(extraData);
+    setSharedMimeType(mimeType);
+  }, []);
 
   useEffect(() => {
-    const getInitialUrl = async () => {
-      const initialUrl = await Linking.getInitialURL();
-      if (initialUrl) {
-        setData(initialUrl);
-      }
-    };
-    const removeListner = Linking.addEventListener('url', handelDeepLink);
-    if (!data) {
-      getInitialUrl();
-    }
+    ShareMenu.getInitialShare(handleShare);
+  }, []);
+
+  useEffect(() => {
+    const listener = ShareMenu.addNewShareListener(handleShare);
+
     return () => {
-      removeListner.remove();
+      listener.remove();
     };
   }, []);
 
-  const linking = {
-    prefixes: ['aroundly://app'],
-    config: {
-      screens: {
-        NewEventScreen: 'newevent',
-      },
-    },
-  };
-
   const didTryAutoLogin = useSelector(state => state.user.didTryAutoLogin);
-
   const appNavigator = () =>
     didTryAutoLogin ? <AuthNavigator /> : <StartupScreen />;
 
-  const newEventScreen = () => <NewEventScreen data={data} />;
+  const newEventScreen = () => {
+    if (!sharedData || !sharedMimeType) return <View></View>;
+    return (
+      <NewEventScreen
+        data={sharedData}
+        mimeType={sharedMimeType}
+        extraData={sharedExtraData}
+      />
+    );
+  };
 
   return (
-    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
+    <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="appNavigator"
-          component={appNavigator}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="NewEventScreen"
-          component={newEventScreen}
-          options={{headerBackTitleVisible: false}}
-        />
+        {!sharedData && (
+          <Stack.Screen
+            name="appNavigator"
+            component={appNavigator}
+            options={{headerShown: false}}
+          />
+        )}
+        {sharedData && (
+          <Stack.Screen
+            name="NewEventScreen"
+            component={newEventScreen}
+            options={{title: 'Save Link to Aroundly', headerTitleAlign: 'left'}}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

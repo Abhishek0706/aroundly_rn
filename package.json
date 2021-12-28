@@ -23,6 +23,7 @@
     "react-native-maps": "^0.29.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
+    "react-native-share-menu": "^5.0.5",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2"
   },

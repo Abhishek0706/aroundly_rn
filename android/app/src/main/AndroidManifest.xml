@@ -15,7 +15,10 @@
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
         android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustResize"
+        android:documentLaunchMode="never">
+        
+
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -29,6 +32,15 @@
             android:host="app"
             android:scheme="aroundly" />
         </intent-filter>
+
+        <intent-filter>
+          <action android:name="android.intent.action.SEND" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <data android:mimeType="text/plain" />
+          <data android:mimeType="image/*" />
+          <!-- Any other mime types you want to support -->
+        </intent-filter>
+
       </activity>
 
       <meta-data
