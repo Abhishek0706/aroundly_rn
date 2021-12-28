@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   markerImageContainer: {
     height: 35,
     width: 35,
-    borderRadius: 15,
+    borderRadius: 17,
     overflow: 'hidden',
   },
   markerImage: {

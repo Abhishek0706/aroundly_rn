@@ -22,7 +22,6 @@ export const didTryAutoLogin = () => {
 };
 
 const saveDataToStorage = async (name, email, dob, image) => {
-  console.log(name, email);
   await AsyncStorage.setItem(
     'userData',
     JSON.stringify({
