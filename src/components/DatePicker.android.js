@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Text from '../components/UI/Text';
 
 const DatePicker = ({setDob}) => {
   const [date, setDate] = useState(new Date());
