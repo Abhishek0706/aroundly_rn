@@ -12,6 +12,7 @@ const NewEventScreen = ({data, mimeType, extraData}) => {
   const [inputLink, setInputLink] = useState(data);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [granted, setGranted] = useState(true);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -48,6 +49,14 @@ const NewEventScreen = ({data, mimeType, extraData}) => {
       }
     });
   }, []);
+
+  if (saved) {
+    return (
+      <View style={styles.screen}>
+        <Text style={styles.boldText}>LOCATION SAVED :P</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.screen}>
@@ -91,7 +100,9 @@ const NewEventScreen = ({data, mimeType, extraData}) => {
         <Button
           title="Save location"
           onPress={() => {
+            console.log(currentPosition);
             saveDataToStorage(inputLink, currentPosition);
+            setSaved(true);
           }}
         />
       </View>
@@ -113,7 +124,7 @@ const saveDataToStorage = async (inputLink, currentPosition) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
     paddingHorizontal: 20,

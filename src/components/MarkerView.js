@@ -34,15 +34,18 @@ const styles = StyleSheet.create({
     width: 35,
     borderRadius: 17,
     overflow: 'hidden',
+    borderColor: 'black',
+    borderWidth: 2,
   },
   markerImage: {
     height: '100%',
     width: '100%',
   },
   markerText: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: 'black',
   },
 });
 

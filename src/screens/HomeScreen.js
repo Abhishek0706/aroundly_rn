@@ -1,18 +1,21 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {useSelector, useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MarkerView from '../components/MarkerView';
 import LogoutButton from '../components/LogoutButton';
 
 import {logout} from '../store/actions/auth';
+import customMapStyle from '../assets/customMapStyle';
 
 const HomeScreen = ({navigation, route}) => {
   const [currentPosition, setCurrentPosition] = useState(null);
   const [granted, setGranted] = useState(true);
+  const [favArray, setFavArray] = useState([]);
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -26,6 +29,21 @@ const HomeScreen = ({navigation, route}) => {
       headerRight: () => <LogoutButton onPress={logoutHandler} />,
     });
   }, [navigation]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AsyncStorage.getItem('favourites');
+      if (data) {
+        const transformedData = JSON.parse(data);
+        const transformedArray = [];
+        for (const i in transformedData) {
+          transformedArray.push({key: i, data: transformedData[i]});
+        }
+        setFavArray(transformedArray);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     let myInterval;
@@ -75,6 +93,8 @@ const HomeScreen = ({navigation, route}) => {
       <View style={styles.screen}>
         <MapView
           style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={customMapStyle}
           initialRegion={{
             latitude: currentPosition.coords.latitude,
             longitude: currentPosition.coords.longitude,
@@ -88,6 +108,16 @@ const HomeScreen = ({navigation, route}) => {
             }}>
             <MarkerView name={user.name} image={user.image} />
           </Marker>
+
+          {favArray.map(fav => (
+            <Marker
+              key={fav.key}
+              coordinate={{
+                latitude: fav.data.currentPosition.latitude,
+                longitude: fav.data.currentPosition.longitude,
+              }}
+            />
+          ))}
         </MapView>
       </View>
     );
