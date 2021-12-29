@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TextInput, Button} from 'react-native';
+import {View, StyleSheet, Button} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from '../components/UI/Text';
+import TextInput from '../components/UI/TextInput';
 
 const introText =
   'Save links from anywhere on internet with location and drop them inside Aroundly to turn them into your personal wishlist of places';

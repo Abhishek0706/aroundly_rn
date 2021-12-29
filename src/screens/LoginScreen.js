@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
-  TextInput,
   Button,
   KeyboardAvoidingView,
   Image,
 } from 'react-native';
+
+import TextInput from '../components/UI/TextInput';
 
 import {launchImageLibrary} from 'react-native-image-picker';
 

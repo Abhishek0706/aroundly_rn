@@ -1,10 +1,8 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet} from 'react-native';
 
 export default props => (
-  <Text style={{...styles.poppins, ...props.style}} {...props}>
-    {props.children}
-  </Text>
+  <TextInput style={{...styles.poppins, ...props.style}} {...props} />
 );
 
 const styles = StyleSheet.create({
