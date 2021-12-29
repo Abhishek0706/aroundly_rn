@@ -7,11 +7,7 @@ const MarkerView = ({name = 'Hritik', image}) => {
     <View style={styles.markerContainer}>
       <View style={styles.markerImageContainer}>
         <Image
-          source={
-            !!image
-              ? {uri: image}
-              : require('../assets/Hrithik-Roshan-Image.png')
-          }
+          source={!!image ? {uri: image} : require('../assets/hritik.png')}
           style={styles.markerImage}
           resizeMode="contain"
         />
@@ -31,9 +27,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   markerImageContainer: {
-    height: 35,
-    width: 35,
-    borderRadius: 17,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
     overflow: 'hidden',
     borderColor: 'black',
     borderWidth: 2,

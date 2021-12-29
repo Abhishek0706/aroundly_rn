@@ -42,6 +42,12 @@ const MainNavigator = () => {
     };
   }, []);
 
+  const saveComplete = () => {
+    setSharedData(null);
+    setSharedMimeType(null);
+    setSharedExtraData(null);
+  };
+
   const didTryAutoLogin = useSelector(state => state.user.didTryAutoLogin);
   const appNavigator = () =>
     didTryAutoLogin ? <AuthNavigator /> : <StartupScreen />;
@@ -53,6 +59,7 @@ const MainNavigator = () => {
         data={sharedData}
         mimeType={sharedMimeType}
         extraData={sharedExtraData}
+        onSaveComplete={saveComplete}
       />
     );
   };

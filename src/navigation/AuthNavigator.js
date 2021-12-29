@@ -19,7 +19,13 @@ const AuthNavigator = () => {
           options={{title: 'Aroundly'}}
         />
       )}
-      {!isAuth && <Stack.Screen name="LoginScreen" component={LoginScreen} />}
+      {!isAuth && (
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+      )}
     </Stack.Navigator>
   );
 };

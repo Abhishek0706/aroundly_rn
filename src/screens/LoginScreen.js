@@ -39,10 +39,7 @@ const LoginScreen = ({navigation, route}) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={50}
-      style={styles.screen}>
+    <KeyboardAvoidingView style={styles.screen}>
       {image && (
         <View style={styles.imageContainer}>
           <Image source={{uri: image}} style={styles.image} />

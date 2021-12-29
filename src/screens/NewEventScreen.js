@@ -10,7 +10,7 @@ import TextInput from '../components/UI/TextInput';
 const introText =
   'Save links from anywhere on internet with location and drop them inside Aroundly to turn them into your personal wishlist of places';
 
-const NewEventScreen = ({data, mimeType, extraData}) => {
+const NewEventScreen = ({data, mimeType, extraData, onSaveComplete}) => {
   const [inputLink, setInputLink] = useState(data);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [granted, setGranted] = useState(true);
@@ -53,11 +53,7 @@ const NewEventScreen = ({data, mimeType, extraData}) => {
   }, []);
 
   if (saved) {
-    return (
-      <View style={styles.screen}>
-        <Text style={styles.boldText}>LOCATION SAVED :P</Text>
-      </View>
-    );
+    setTimeout(onSaveComplete, 100);
   }
 
   return (
@@ -141,6 +137,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
     height: 45,
+    width: '100%',
+    textAlign: 'center',
   },
   locationContainer: {
     flexDirection: 'row',
